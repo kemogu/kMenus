@@ -13,15 +13,8 @@ class ActionItem : public IMenuItem {
         : IMenuItem(title), action(actionFunc) {}
 
         bool execute() override {
-            try {
+            if (action) {
                 action();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cin.get();
-            }
-            catch(const std::exception& e) {
-                std::cerr << e.what() << '\n';
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cin.get();
             }
             return true;
         }
