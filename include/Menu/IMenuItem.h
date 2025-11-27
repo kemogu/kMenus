@@ -10,7 +10,7 @@ class IMenuItem {
         explicit IMenuItem(const std::string& t) : title(t) {}
         virtual ~IMenuItem() = default;
 
-        std::string get_title() const {
+        const std::string& get_title() const {
             return this->title;
         }
 
