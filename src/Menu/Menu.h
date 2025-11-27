@@ -14,9 +14,11 @@ class Menu : public IMenuItem {
         void add_item(std::shared_ptr<IMenuItem> item) {
             items.push_back(item);
         }
-
-        void add_action(const std::string& title, std::function<void()> action) {
-            items.push_back(std::make_shared<ActionItem>(title, action));
+        
+        template <typename Func, typename... Args>
+        void add_action(const std::string& title, Func&& func, Args&&... args) {
+            auto boundAction = std::bind(std::forward<Func>(func), std::forward<Args>(args)...);
+            items.push_back(std::make_shared<ActionItem>(title, boundAction));
         }
 
         void add_sub_menu(std::shared_ptr<Menu> subMenu) {
