@@ -52,6 +52,7 @@ class Menu : public IMenuItem {
                 if (isChoiceValid) {
                     try {
                         items[choice - 1]->execute();
+                        MenuUtils::pause();
                     }
                     catch(const std::exception& err) {
                         std::cerr << err.what() << '\n';
