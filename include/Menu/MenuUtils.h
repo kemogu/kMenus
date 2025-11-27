@@ -10,9 +10,8 @@ public:
         std::cout << "\033[2J\033[1;1H";
     }
 
-    static void pause(const std::string& message = "Devam etmek icin Enter'a basin...") {
+    static void pause(const std::string& message = "Please press enter to continue...") {
         std::cout << "\n" << message;
-        // Tamponda veri varsa temizle, yoksa sadece bekle
         if (std::cin.rdbuf()->in_avail() > 0) {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
