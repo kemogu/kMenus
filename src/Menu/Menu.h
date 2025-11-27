@@ -42,7 +42,7 @@ class Menu : public IMenuItem {
                     std::cout << "0. Exit" << "\n";
                 }
                 else {
-                    std::cout << "0. Go back main menu." << "\n";
+                    std::cout << "0. Go back." << "\n";
                 }
 
                 std::cout << "\n" << "Choice >> ";
