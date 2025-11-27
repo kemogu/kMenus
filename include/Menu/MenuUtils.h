@@ -32,4 +32,12 @@ public:
             }
         }
     }
+
+    static std::string get_string_option(const std::string& prompt) {
+        std::string input;
+        std::cout << prompt;
+        // std::ws trim left
+        std::getline(std::cin >> std::ws, input);
+        return input;
+    }
 };
