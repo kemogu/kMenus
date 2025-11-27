@@ -6,6 +6,7 @@
 
 #include "IMenuItem.h"
 #include "ActionItem.h"
+#include "MenuUtils.h"
 
 class Menu : public IMenuItem {
     public:
@@ -27,11 +28,7 @@ class Menu : public IMenuItem {
 
         bool execute() override {
             while (true) {
-                #ifdef _WIN32
-                    std::system("cls");
-                #else
-                    std::system("clear");
-                #endif
+                MenuUtils::clear_screen();
                 
                 // List items
                 for (size_t i = 0; i < items.size(); ++i) {
@@ -45,25 +42,25 @@ class Menu : public IMenuItem {
                     std::cout << "0. Go back." << "\n";
                 }
 
-                std::cout << "\n" << "Choice >> ";
-
-                int choice;
-                if (!(std::cin >> choice)) {
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    continue;
-                }
-
+                
+                int choice = MenuUtils::get_int_option("\nChoice >> ");
                 if (0 == choice) {
                     return false;
                 }
 
                 bool isChoiceValid = ((choice > 0) && (choice <= static_cast<int>(this->items.size())));
                 if (isChoiceValid) {
-                    items[choice - 1]->execute();
+                    try {
+                        items[choice - 1]->execute();
+                    }
+                    catch(const std::exception& err) {
+                        std::cerr << err.what() << '\n';
+                        MenuUtils::pause("Please read error message after that you can press enter to continue...");
+                    }
                 }
                 else {
-                    std::cout << "Invalid choice" << "\n";
+                    std::cout << "Invalid choice!" << "\n";
+                    MenuUtils::pause();
                 }
             }
         }
